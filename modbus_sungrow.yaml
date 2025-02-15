@@ -2606,19 +2606,19 @@ input_number:
   set_sg_forced_charge_discharge_power:
     name: Forced charge discharge power (W)
     min: 0
-    max: 5000 # change this value according to the capability of your battery
+    max: 8900 # change this value according to the capability of your battery
     step: 100
 
   set_sg_battery_max_charge_power:
     name: Max battery charge power (W)
     min: 100
-    max: 5000 # change this value according to the capability of your battery
+    max: 8900 # change this value according to the capability of your battery
     step: 100
 
   set_sg_battery_max_discharge_power:
     name: Max battery discharge power (W)
     min: 100
-    max: 5000 # change this value according to the capability of your battery
+    max: 8900 # change this value according to the capability of your battery
     step: 100
 
   # This threshold is compared against the currently achievable charging power, not just against the currently available surplus.
@@ -2640,7 +2640,7 @@ input_number:
   set_sg_export_power_limit:
     name: Export power limit (W)
     min: 0
-    max: 10500 # TODO Note: max for SH10.RT. It would be nice to have this as a global variable /secret
+    max: 20000 # TODO Note: max for SH10.RT. It would be nice to have this as a global variable /secret
     step: 100
 
 input_select:
