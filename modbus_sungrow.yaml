@@ -1670,32 +1670,32 @@ modbus:
         scan_interval: 10
 
       #undocumented sensor (reverse engineered by some guys of photovoltaikforum.com and forum.iobroker.net )
-      - name: Battery charging start power
-        unique_id: sg_battery_charging_start_power
-        device_address: !secret sungrow_modbus_slave
-        address: 33148 # reg 33149
-        input_type: holding
-        data_type: uint16
-        precision: 0
-        unit_of_measurement: W
-        device_class: power
-        state_class: measurement
-        scale: 10
-        scan_interval: 10
+      #- name: Battery charging start power
+      #  unique_id: sg_battery_charging_start_power
+      #  device_address: !secret sungrow_modbus_slave
+      #  address: 33148 # reg 33149
+      #  input_type: holding
+      #  data_type: uint16
+      #  precision: 0
+      #  unit_of_measurement: W
+      #  device_class: power
+      #  state_class: measurement
+      #  scale: 10
+      #  scan_interval: 10
 
       #undocumented sensor (reverse engineered by some guys of photovoltaikforum.com and forum.iobroker.net )
-      - name: Battery discharging start power
-        unique_id: sg_battery_discharging_start_power
-        device_address: !secret sungrow_modbus_slave
-        address: 33149 # reg 33150
-        input_type: holding
-        data_type: uint16
-        precision: 0
-        unit_of_measurement: W
-        device_class: power
-        state_class: measurement
-        scale: 10
-        scan_interval: 10
+      #- name: Battery discharging start power
+      #  unique_id: sg_battery_discharging_start_power
+      #  device_address: !secret sungrow_modbus_slave
+      #  address: 33149 # reg 33150
+      #  input_type: holding
+      #  data_type: uint16
+      #  precision: 0
+      #  unit_of_measurement: W
+      #  device_class: power
+      #  state_class: measurement
+      #  scale: 10
+      #  scan_interval: 10
 
       - name: Global mpp scan manual raw
         unique_id: sg_global_mpp_scan_manual_raw
@@ -2625,17 +2625,17 @@ input_number:
   # If this is set higher than the maximum charging power of the battery, charging will not start.
   # If currently achievable charging power drops below this threshold, charging will stop. Actual charging power (limited by register 33047) is ignored.
   # Charging might stop before reaching 100% if set too close to the maximum charging power of the battery, due to achievable charging power naturally dropping at high state of charge.
-  set_sg_battery_charging_start_power:
-    name: Battery charging start power (W)
-    min: 0
-    max: 250
-    step: 10
+  #set_sg_battery_charging:
+  #  name: Battery charging start power (W)
+  #  min: 0
+  #  max: 250
+  #  step: 10
 
-  set_sg_battery_discharging_start_power:
-    name: Battery discharging start power (W)
-    min: 0
-    max: 250
-    step: 10
+  #set_sg_battery_discharging_start_power:
+  #  name: Battery discharging start power (W)
+  #  min: 0
+  #  max: 250
+  #  step: 10
 
   set_sg_export_power_limit:
     name: Export power limit (W)
@@ -3188,75 +3188,75 @@ automation:
           value: "{{ states('sensor.battery_max_discharge_power') }}"
     mode: single
 
-  - id: "automation_sungrow_inverter_update_battery_charging_start_power"
-    alias: "sungrow inverter update battery charging start power"
-    description: "Sets battery charging start power"
-    triggers:
-      - trigger: state
-        entity_id:
-          - input_number.set_sg_battery_charging_start_power
-    conditions: []
-    actions:
-      - action: modbus.write_register
-        data_template:
-          hub: SungrowSHx
-          slave: !secret sungrow_modbus_slave
-          address: 33148 # reg 33149
-          value: "{{ states('input_number.set_sg_battery_charging_start_power') |float /10 |int}}"
-    mode: single
+  #- id: "automation_sungrow_inverter_update_battery_charging_start_power"
+  #  alias: "sungrow inverter update battery charging start power"
+  #  description: "Sets battery charging start power"
+  #  triggers:
+  #    - trigger: state
+  #      entity_id:
+  #        - input_number.set_sg_battery_charging_start_power
+  #  conditions: []
+  #  actions:
+  #    - action: modbus.write_register
+  #      data_template:
+  #        hub: SungrowSHx
+  #        slave: !secret sungrow_modbus_slave
+  #        address: 33148 # reg 33149
+  #        value: "{{ states('input_number.set_sg_battery_charging_start_power') |float /10 |int}}"
+  #  mode: single
 
-  - id: "automation_sungrow_inverter_update_battery_charging_start_power_input_slider_update"
-    alias: "sungrow inverter update battery charging start power input slider update"
-    description: "Updates battery charging start power input slider"
-    triggers:
-      - trigger: state
-        entity_id:
-          - sensor.battery_charging_start_power
-    conditions:
-      - condition: template
-        value_template: "{{ not is_state('sensor.battery_charging_start_power', 'unavailable') }}"
-    actions:
-      - action: input_number.set_value
-        target:
-          entity_id: input_number.set_sg_battery_charging_start_power
-        data:
-          value: "{{ states('sensor.battery_charging_start_power') }}"
-    mode: single
+  #- id: "automation_sungrow_inverter_update_battery_charging_start_power_input_slider_update"
+  #  alias: "sungrow inverter update battery charging start power input slider update"
+  #  description: "Updates battery charging start power input slider"
+  #  triggers:
+  #    - trigger: state
+  #      entity_id:
+  #        - sensor.battery_charging_start_power
+  #  conditions:
+  #    - condition: template
+  #      value_template: "{{ not is_state('sensor.battery_charging_start_power', 'unavailable') }}"
+  #  actions:
+  #    - action: input_number.set_value
+  #      target:
+  #        entity_id: input_number.set_sg_battery_charging_start_power
+  #      data:
+  #        value: "{{ states('sensor.battery_charging_start_power') }}"
+  #  mode: single
 
-  - id: "automation_sungrow_inverter_update_battery_discharging_start_power"
-    alias: "sungrow inverter update battery discharging start power"
-    description: "Sets battery discharging start power"
-    triggers:
-      - trigger: state
-        entity_id:
-          - input_number.set_sg_battery_discharging_start_power
-    conditions: []
-    actions:
-      - action: modbus.write_register
-        data_template:
-          hub: SungrowSHx
-          slave: !secret sungrow_modbus_slave
-          address: 33149 # reg 33150
-          value: "{{ states('input_number.set_sg_battery_discharging_start_power') |float /10 | int}}"
-    mode: single
+  #- id: "automation_sungrow_inverter_update_battery_discharging_start_power"
+  #  alias: "sungrow inverter update battery discharging start power"
+  #  description: "Sets battery discharging start power"
+  #  triggers:
+  #    - trigger: state
+  #      entity_id:
+  #        - input_number.set_sg_battery_discharging_start_power
+  #  conditions: []
+  #  actions:
+  #    - action: modbus.write_register
+  #      data_template:
+  #        hub: SungrowSHx
+  #        slave: !secret sungrow_modbus_slave
+  #        address: 33149 # reg 33150
+  #        value: "{{ states('input_number.set_sg_battery_discharging_start_power') |float /10 | int}}"
+  #  mode: single
 
-  - id: "automation_sungrow_inverter_update_battery_discharging_start_power_input_slider_update"
-    alias: "sungrow inverter update battery discharging start power input slider update"
-    description: "Updates battery discharging start power input slider"
-    triggers:
-      - trigger: state
-        entity_id:
-          - sensor.battery_discharging_start_power
-    conditions:
-      - condition: template
-        value_template: "{{ not is_state('sensor.battery_discharging_start_power', 'unavailable') }}"
-    actions:
-      - action: input_number.set_value
-        target:
-          entity_id: input_number.set_sg_battery_discharging_start_power
-        data:
-          value: "{{ states('sensor.battery_discharging_start_power') }}"
-    mode: single
+  #- id: "automation_sungrow_inverter_update_battery_discharging_start_power_input_slider_update"
+  #  alias: "sungrow inverter update battery discharging start power input slider update"
+  #  description: "Updates battery discharging start power input slider"
+  #  triggers:
+  #    - trigger: state
+  #      entity_id:
+  #        - sensor.battery_discharging_start_power
+  #  conditions:
+  #    - condition: template
+  #      value_template: "{{ not is_state('sensor.battery_discharging_start_power', 'unavailable') }}"
+  #  actions:
+  #    - action: input_number.set_value
+  #      target:
+  #        entity_id: input_number.set_sg_battery_discharging_start_power
+  #      data:
+  #        value: "{{ states('sensor.battery_discharging_start_power') }}"
+  #  mode: single
 
   - id: "automation_sungrow_inverter_global_mpp_scan_manual_update"
     alias: "sungrow inverter global mpp scan manual update"
