@@ -272,7 +272,8 @@ views:
         title: Enable Danger Mode
       - type: entities
         entities:
-          - entity: switch.enable_inverter
+          - entity: button.start_inverter
+          - entity: button.stop_inverter
           - entity: sensor.sungrow_inverter_state
           - entity: select.ems_mode
           - entity: select.battery_forced_charge_discharge
@@ -281,7 +282,6 @@ views:
           - entity: switch.load_adjustment_mode
           - entity: switch.export_power_limit
           - entity: number.export_power_limit
-          - entity: switch.forced_startup_under_low_soc_standby
         title: Inverter State & EMS Settings
         show_header_toggle: false
         state_color: true
