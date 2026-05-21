@@ -2370,7 +2370,7 @@ scene:
 
   - name: Max Export Power
     entities:
-      switch.export_power_limit: "off"
+      switch.export_power_limit: "on"
       # scripts don't render templates :/
       # number.export_power_limit is set by an automation
 
